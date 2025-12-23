@@ -1,0 +1,77 @@
+.layout {
+  min-height: 100vh;
+  background-color: #f0f2f5;
+}
+
+.sider {
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 100;
+  overflow-y: auto;
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.15);
+  background: #001529;
+}
+
+.logo {
+  height: 64px;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.2);
+  margin: 16px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: white;
+  font-weight: 600;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.header {
+  background: white;
+  padding: 0 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 64px;
+  position: sticky;
+  top: 0;
+  z-index: 99;
+}
+
+.headerContent {
+  display: flex;
+  align-items: center;
+}
+
+.userInfo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.content {
+  margin-left: 200px;
+  padding: 24px;
+  background: #f0f2f5;
+  min-height: calc(100vh - 64px);
+  margin-top: 64px;
+}
+
+@media (max-width: 768px) {
+  .sider.ant-layout-sider-collapsed {
+    width: 80px;
+  }
+
+  .content {
+    margin-left: 80px;
+  }
+
+  .logo {
+    margin: 8px;
+    padding: 8px;
+  }
+}

@@ -1,0 +1,24 @@
+version: '3.9'
+services:
+  postgres:
+    image: postgres:latest
+    container_name: 'appliance-service-api-postgres'
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=appliance-service-db
+    ports:
+      - '5432:5432'
+    volumes:
+      - ./pgdata:/var/lib/postgresql
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}']
+      interval: 3s
+      timeout: 10s
+      retries: 3
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: '500M'

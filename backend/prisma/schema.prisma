@@ -1,0 +1,220 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum RequestStatus {
+  OPEN
+  IN_PROGRESS
+  WAITING_PARTS
+  COMPLETED
+  CANCELLED
+
+  @@map("requestStatus")
+}
+
+enum ClimateTechType {
+  CONDITIONER
+  SPLIT_SYSTEM
+  WINDOW_AC
+  CENTRAL_AC
+  PORTABLE_AC
+  HEAT_PUMP
+  OTHER
+
+  @@map("climateTechType")
+}
+
+enum EquipmentType {
+  SPLIT_SYSTEM
+  WINDOW_AC
+  CENTRAL_AC
+  PORTABLE_AC
+  HEAT_PUMP
+  OTHER
+}
+
+enum UserRole {
+  ADMIN
+  MANAGER
+  SPECIALIST
+  CLIENT
+}
+
+enum NotificationType {
+  STATUS_CHANGED
+  ASSIGNED_TO_YOU
+  COMMENT_ADDED
+  PARTS_ORDERED
+  COMPLETION
+}
+
+model User {
+  id              String   @id @default(cuid())
+  phone           String   @unique
+  login           String   @unique
+  name            String
+  password        String
+  role            UserRole @default(SPECIALIST)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  masterRequests  Request[]     @relation("AssignedToMaster")
+  comments        Comment[]
+  notifications   Notification[]
+  statusHistories StatusHistory[]
+
+  @@index([login])
+  @@index([phone])
+  @@index([role])
+  requests Request[]
+}
+
+model Request {
+  id                 Int             @id @default(autoincrement()) @map("requestID")
+  startDate          DateTime        @default(now()) @map("startDate")
+  climateTechType    ClimateTechType @map("climateTechType")
+  climateTechModel   String          @map("climateTechModel")
+  problemDescription String          @db.Text @map("problemDescryption")
+  requestStatus      RequestStatus   @default(OPEN) @map("requestStatus")
+  completionDate     DateTime?       @map("completionDate")
+  repairParts        String?         @db.Text @map("repairParts")
+
+  master             User?           @relation("AssignedToMaster", fields: [masterID], references: [id], onDelete: SetNull)
+  masterID           String?         @map("masterID")
+
+  client             User          @relation(fields: [clientID], references: [id], onDelete: Restrict)
+  clientID           String          @map("clientID")
+
+  comments           Comment[]
+  statusHistories    StatusHistory[]
+  orderedParts       OrderedPart[]
+  notifications Notification[]
+
+  @@map("Requests")
+}
+
+model StatusHistory {
+  id          String        @id @default(cuid())
+  request     Request       @relation(fields: [requestId], references: [id], onDelete: Cascade)
+  requestId   Int
+
+  oldStatus   RequestStatus
+  newStatus   RequestStatus
+  changedAt   DateTime      @default(now())
+  changedBy   User?         @relation(fields: [changedById], references: [id])
+  changedById String?
+  reason      String?       @db.Text
+
+  @@index([requestId])
+  @@index([changedAt])
+}
+
+model Comment {
+  id        Int     @id @default(autoincrement()) @map("commentID")
+  message   String  @db.Text
+
+  request   Request @relation(fields: [requestID], references: [id], onDelete: Cascade)
+  requestID Int     @map("requestID")
+
+  master    User    @relation(fields: [masterID], references: [id], onDelete: Cascade)
+  masterID  String  @map("masterID")
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("Comments")
+  @@index([createdAt])
+}
+
+model OrderedPart {
+  id                   String    @id @default(cuid())
+  request              Request   @relation(fields: [requestId], references: [id], onDelete: Cascade)
+  requestId            Int
+  
+  partName             String
+  partNumber           String?
+  quantity             Int       @default(1)
+  unitPrice            Float?
+  totalPrice           Float?
+  
+  supplier             String?
+  orderDate            DateTime  @default(now())
+  expectedDeliveryDate DateTime?
+  actualDeliveryDate   DateTime?
+  
+  status               String    @default("ORDERED")
+  notes                String?   @db.Text
+  
+  @@index([requestId])
+  @@index([status])
+}
+
+model Notification {
+  id        String           @id @default(cuid())
+  user      User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+  
+  request   Request?         @relation(fields: [requestId], references: [id], onDelete: SetNull)
+  requestId Int?
+  
+  type      NotificationType
+  title     String
+  message   String           @db.Text
+  isRead    Boolean          @default(false)
+  readAt    DateTime?
+  
+  createdAt DateTime         @default(now())
+  
+  @@index([userId])
+  @@index([isRead])
+  @@index([createdAt])
+}
+
+model AuditLog {
+  id         String   @id @default(cuid())
+  userId     String?
+  action     String
+  entityType String
+  entityId   String
+  oldValue   String?  @db.Text
+  newValue   String?  @db.Text
+  ipAddress  String?
+  userAgent  String?
+  createdAt  DateTime @default(now())
+  
+  @@index([userId])
+  @@index([action])
+  @@index([createdAt])
+}
+
+model DefectStatistic {
+  id                String        @id @default(cuid())
+  equipmentType     EquipmentType
+  defectType        String
+  totalCount        Int           @default(0)
+  averageRepairTime Float?
+  completionRate    Float?
+  lastUpdated       DateTime      @default(now())
+  
+  @@unique([equipmentType, defectType])
+  @@index([equipmentType])
+}
+
+model DepartmentStatistic {
+  id                 String   @id @default(cuid())
+  totalRequests      Int      @default(0)
+  completedRequests  Int      @default(0)
+  inProgressRequests Int      @default(0)
+  averageRepairTime  Float?
+  periodStartDate    DateTime
+  periodEndDate      DateTime
+  lastUpdated        DateTime @default(now()) @updatedAt
+  
+  @@unique([periodStartDate, periodEndDate])
+  @@index([lastUpdated])
+}
