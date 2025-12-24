@@ -1,8 +1,8 @@
 import { useRequests } from "@/entities/request/model/hooks/useRequests";
 import {
-  ClimateTechTypeLabels,
-  RequestStatus,
-  RequestStatusLabels
+    homeTechTypeLabels,
+    RequestStatus,
+    RequestStatusLabels
 } from "@/entities/request/model/types/request";
 import { SearchOutlined } from "@ant-design/icons";
 import { Card, Input, Table, Tag } from "antd";
@@ -48,8 +48,8 @@ export const RequestList = () => {
       key: 'equipment',
       render: (_: any, record: Request) => (
         <>
-          <div><b>{ClimateTechTypeLabels[record.climateTechType]}</b></div>
-          <div style={{ fontSize: '12px', color: '#888' }}>{record.climateTechModel}</div>
+          <div><b>{homeTechTypeLabels[record.homeTechType]}</b></div>
+          <div style={{ fontSize: '12px', color: '#888' }}>{record.homeTechModel}</div>
         </>
       ),
     },

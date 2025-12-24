@@ -17,7 +17,7 @@ enum RequestStatus {
   @@map("requestStatus")
 }
 
-enum ClimateTechType {
+enum HomeTechType {
   CONDITIONER
   SPLIT_SYSTEM
   WINDOW_AC
@@ -26,7 +26,7 @@ enum ClimateTechType {
   HEAT_PUMP
   OTHER
 
-  @@map("climateTechType")
+  @@map("homeTechType")
 }
 
 enum EquipmentType {
@@ -77,8 +77,8 @@ model User {
 model Request {
   id                 Int             @id @default(autoincrement()) @map("requestID")
   startDate          DateTime        @default(now()) @map("startDate")
-  climateTechType    ClimateTechType @map("climateTechType")
-  climateTechModel   String          @map("climateTechModel")
+  homeTechType       HomeTechType @map("homeTechType")
+  homeTechModel      String          @map("homeTechModel")
   problemDescription String          @db.Text @map("problemDescryption")
   requestStatus      RequestStatus   @default(OPEN) @map("requestStatus")
   completionDate     DateTime?       @map("completionDate")

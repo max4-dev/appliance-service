@@ -173,7 +173,7 @@ export class OrderedPartService {
         request: {
           select: {
             id: true,
-            climateTechModel: true,
+            homeTechModel: true,
           },
         },
       },

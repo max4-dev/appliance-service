@@ -69,7 +69,7 @@ export class StatisticService {
 
   async getDefectStatistic() {
     const defects = await this.prisma.request.groupBy({
-      by: ['climateTechType'],
+      by: ['homeTechType'],
       _count: {
         id: true,
       },
@@ -81,7 +81,7 @@ export class StatisticService {
     });
 
     return defects.map((d) => ({
-      equipmentType: d.climateTechType,
+      equipmentType: d.homeTechType,
       count: d._count.id,
     }));
   }

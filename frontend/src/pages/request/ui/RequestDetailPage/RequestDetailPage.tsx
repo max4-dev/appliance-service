@@ -1,5 +1,5 @@
 import { useGetRequestById } from "@/entities/request/model/hooks/useGetRequestById";
-import { ClimateTechTypeLabels, RequestStatusLabels } from "@/entities/request/model/types/request";
+import { homeTechTypeLabels, RequestStatusLabels } from "@/entities/request/model/types/request";
 import { AssignMasterForm } from "@/features/request/ui/AssignMasterForm/AssignMasterForm";
 import { UpdateRequestForm } from "@/features/request/ui/UpdateRequestForm/UpdateRequestForm";
 import { UpdateRequestStatusForm } from "@/features/request/ui/UpdateRequestStatusForm/UpdateRequestStatusForm";
@@ -82,10 +82,10 @@ export const RequestDetailPage: FC<Props> = ({
                     </Tag>
                   </Descriptions.Item>
                   <Descriptions.Item label="Тип оборудования">
-                    {ClimateTechTypeLabels[request.climateTechType]}
+                    {homeTechTypeLabels[request.homeTechType]}
                   </Descriptions.Item>
                   <Descriptions.Item label="Модель">
-                    {request.climateTechModel}
+                    {request.homeTechModel}
                   </Descriptions.Item>
                   <Descriptions.Item label="Клиент">
                     {request.client?.name || "—"}

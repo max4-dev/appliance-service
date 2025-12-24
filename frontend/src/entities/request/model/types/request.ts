@@ -6,7 +6,7 @@ export enum RequestStatus {
   CANCELLED = "CANCELLED",
 }
 
-export enum ClimateTechType {
+export enum homeTechType {
   CONDITIONER = "CONDITIONER",
   SPLIT_SYSTEM = "SPLIT_SYSTEM",
   WINDOW_AC = "WINDOW_AC",
@@ -16,14 +16,14 @@ export enum ClimateTechType {
   OTHER = "OTHER",
 }
 
-export const ClimateTechTypeLabels: Record<ClimateTechType, string> = {
-  [ClimateTechType.CONDITIONER]: "Кондиционер",
-  [ClimateTechType.SPLIT_SYSTEM]: "Сплит-система",
-  [ClimateTechType.WINDOW_AC]: "Оконный кондиционер",
-  [ClimateTechType.CENTRAL_AC]: "Центральное кондиционирование",
-  [ClimateTechType.PORTABLE_AC]: "Мобильный кондиционер",
-  [ClimateTechType.HEAT_PUMP]: "Тепловой насос",
-  [ClimateTechType.OTHER]: "Другое",
+export const homeTechTypeLabels: Record<homeTechType, string> = {
+  [homeTechType.CONDITIONER]: "Кондиционер",
+  [homeTechType.SPLIT_SYSTEM]: "Сплит-система",
+  [homeTechType.WINDOW_AC]: "Оконный кондиционер",
+  [homeTechType.CENTRAL_AC]: "Центральное кондиционирование",
+  [homeTechType.PORTABLE_AC]: "Мобильный кондиционер",
+  [homeTechType.HEAT_PUMP]: "Тепловой насос",
+  [homeTechType.OTHER]: "Другое",
 };
 
 export const RequestStatusLabels: Record<RequestStatus, string> = {
@@ -37,16 +37,16 @@ export const RequestStatusLabels: Record<RequestStatus, string> = {
 export interface CreateRequestDto {
   clientId: string;
   masterId?: string;
-  climateTechType: ClimateTechType;
-  climateTechModel: string;
+  homeTechType: homeTechType;
+  homeTechModel: string;
   problemDescription: string;
   startDate?: string;
   requestStatus?: RequestStatus;
 }
 
 export interface UpdateRequestDto {
-  climateTechType?: ClimateTechType;
-  climateTechModel?: string;
+  homeTechType?: homeTechType;
+  homeTechModel?: string;
   problemDescription?: string;
   repairParts?: string;
 }
@@ -63,8 +63,8 @@ export interface Request {
   masterID?: string;
   startDate: string;
   completionDate?: string;
-  climateTechType: ClimateTechType;
-  climateTechModel: string;
+  homeTechType: homeTechType;
+  homeTechModel: string;
   problemDescription: string;
   requestStatus: RequestStatus;
   repairParts?: string;

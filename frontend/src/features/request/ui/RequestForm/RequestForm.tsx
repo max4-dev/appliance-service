@@ -1,11 +1,11 @@
+import { useCreateRequest } from "@/entities/request/model/hooks/useCreateRequest";
+import { CreateRequestDto, homeTechType, homeTechTypeLabels, RequestStatus, RequestStatusLabels } from "@/entities/request/model/types/request";
+import { useClients } from "@/entities/user/model/useClients";
+import { useSpecialists } from "@/entities/user/model/useSpecialists";
 import { Button, Card, DatePicker, Form, Input, Select } from "antd";
 import cn from "classnames";
 import dayjs, { Dayjs } from "dayjs";
 import styles from "./RequestForm.module.css";
-import { useCreateRequest } from "@/entities/request/model/hooks/useCreateRequest";
-import { CreateRequestDto, ClimateTechType, ClimateTechTypeLabels, RequestStatus, RequestStatusLabels } from "@/entities/request/model/types/request";
-import { useClients } from "@/entities/user/model/useClients";
-import { useSpecialists } from "@/entities/user/model/useSpecialists";
 
 interface RequestFormProps {
   className?: string;
@@ -37,8 +37,8 @@ export const RequestForm = ({ className, onSuccess }: RequestFormProps) => {
     });
   };
 
-  const typeOptions = Object.values(ClimateTechType).map((type) => ({
-    label: ClimateTechTypeLabels[type],
+  const typeOptions = Object.values(homeTechType).map((type) => ({
+    label: homeTechTypeLabels[type],
     value: type,
   }));
 
@@ -57,7 +57,7 @@ export const RequestForm = ({ className, onSuccess }: RequestFormProps) => {
         onFinish={onFinish}
         autoComplete="off"
         initialValues={{ 
-          climateTechType: ClimateTechType.SPLIT_SYSTEM,
+          homeTechType: homeTechType.SPLIT_SYSTEM,
           requestStatus: RequestStatus.OPEN,
           startDate: dayjs()
         }}
@@ -112,7 +112,7 @@ export const RequestForm = ({ className, onSuccess }: RequestFormProps) => {
 
         <Form.Item
           label="Тип оборудования"
-          name="climateTechType"
+          name="homeTechType"
           rules={[{ required: true, message: 'Выберите тип' }]}
         >
           <Select options={typeOptions} />
@@ -120,7 +120,7 @@ export const RequestForm = ({ className, onSuccess }: RequestFormProps) => {
 
         <Form.Item
           label="Модель"
-          name="climateTechModel"
+          name="homeTechModel"
           rules={[{ required: true, message: 'Введите модель' }]}
         >
           <Input placeholder="Например, Samsung AQV09" />

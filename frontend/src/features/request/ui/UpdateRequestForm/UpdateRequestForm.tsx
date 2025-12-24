@@ -1,6 +1,6 @@
 import { requestQuery } from "@/entities/request/api/query";
 import { useGetRequestById } from "@/entities/request/model/hooks/useGetRequestById";
-import { ClimateTechTypeLabels, UpdateRequestDto } from "@/entities/request/model/types/request";
+import { homeTechTypeLabels, UpdateRequestDto } from "@/entities/request/model/types/request";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Button, Form, Input, message, Select, Space, Spin } from "antd";
 import { FC, useEffect } from "react";
@@ -32,8 +32,8 @@ export const UpdateRequestForm: FC<Props> = ({ requestId, onSuccess }) => {
   useEffect(() => {
     if (request) {
       form.setFieldsValue({
-        climateTechType: request.climateTechType,
-        climateTechModel: request.climateTechModel,
+        homeTechType: request.homeTechType,
+        homeTechModel: request.homeTechModel,
         problemDescription: request.problemDescription,
         repairParts: request.repairParts,
       });
@@ -57,11 +57,11 @@ export const UpdateRequestForm: FC<Props> = ({ requestId, onSuccess }) => {
     >
       <Form.Item
         label="Тип оборудования"
-        name="climateTechType"
+        name="homeTechType"
         rules={[{ required: false }]}
       >
         <Select placeholder="Выберите тип оборудования">
-          {Object.entries(ClimateTechTypeLabels).map(([key, value]) => (
+          {Object.entries(homeTechTypeLabels).map(([key, value]) => (
             <Select.Option key={key} value={key}>
               {value}
             </Select.Option>
@@ -71,7 +71,7 @@ export const UpdateRequestForm: FC<Props> = ({ requestId, onSuccess }) => {
 
       <Form.Item
         label="Модель устройства"
-        name="climateTechModel"
+        name="homeTechModel"
         rules={[{ required: false }]}
       >
         <Input placeholder="Введите модель устройства" />

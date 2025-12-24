@@ -39,7 +39,7 @@ export const CommentsPage: FC = () => {
                 }
                 description={
                   <div>
-                    <Tag>{item.request?.climateTechModel}</Tag>
+                    <Tag>{item.request?.homeTechModel}</Tag>
                     <div style={{ marginTop: 4, color: '#333' }}>{item.message}</div>
                   </div>
                 }

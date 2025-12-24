@@ -1,4 +1,4 @@
-import { ClimateTechType, RequestStatus } from '@prisma/client';
+import { HomeTechType, RequestStatus } from '@prisma/client';
 import { IsEnum, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
 export class CreateRequestDto {
@@ -10,12 +10,12 @@ export class CreateRequestDto {
   @IsNotEmpty()
   masterId: string;
 
-  @IsEnum(ClimateTechType)
-  climateTechType: ClimateTechType;
+  @IsEnum(HomeTechType)
+  homeTechType: HomeTechType;
 
   @IsString()
   @IsNotEmpty()
-  climateTechModel: string;
+  homeTechModel: string;
 
   @IsString()
   @IsNotEmpty()

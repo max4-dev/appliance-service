@@ -36,7 +36,7 @@ export class NotificationService {
           select: {
             id: true,
             requestStatus: true,
-            climateTechModel: true,
+            homeTechModel: true,
           },
         },
       },

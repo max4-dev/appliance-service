@@ -33,8 +33,8 @@ export class RequestService {
 
     const request = await this.prisma.request.create({
       data: {
-        climateTechType: dto.climateTechType,
-        climateTechModel: dto.climateTechModel,
+        homeTechType: dto.homeTechType,
+        homeTechModel: dto.homeTechModel,
         problemDescription: dto.problemDescription,
 
         requestStatus: dto.requestStatus,
@@ -121,7 +121,7 @@ export class RequestService {
       where: {
         OR: [
           ...(isNaN(idQuery) ? [] : [{ id: idQuery }]),
-          { climateTechModel: { contains: query, mode: 'insensitive' } },
+          { homeTechModel: { contains: query, mode: 'insensitive' } },
           { client: { name: { contains: query, mode: 'insensitive' } } },
           { client: { phone: { contains: query } } },
         ],
@@ -241,7 +241,7 @@ export class RequestService {
       requests.length > 0 ? totalTime / requests.length / (1000 * 60 * 60) : 0;
 
     const issuesByType = await this.prisma.request.groupBy({
-      by: ['climateTechType', 'problemDescription'],
+      by: ['homeTechType', 'problemDescription'],
       _count: {
         id: true,
       },

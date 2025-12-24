@@ -13,7 +13,7 @@ async function bootstrap() {
   });
 
   const config = new DocumentBuilder()
-    .setTitle('Climate Service API')
+    .setTitle('Appliance Service API')
     .setDescription(
       'API для учета заявок на ремонт климатического оборудования',
     )

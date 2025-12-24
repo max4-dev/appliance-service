@@ -131,7 +131,7 @@ export class CommentService {
         request: {
           select: {
             id: true,
-            climateTechModel: true,
+            homeTechModel: true,
           },
         },
       },
