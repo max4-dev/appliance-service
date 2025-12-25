@@ -26,9 +26,6 @@ export const removeTokenStorage = () => {
 
 export const logout = () => {
   removeTokenStorage();
-  if (window.location.pathname !== "/") {
-    window.location.href = "/";
-  }
 };
 
 export const getIsRefreshSent = async () => {

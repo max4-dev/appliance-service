@@ -15,19 +15,17 @@ export const RouterProvider = () => {
     <Routes>
       <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<RegisterPage />} />
-      <Route element={<RequireAuth />}>
-        <Route path="/" element={<RootLayout />}>
-          <Route index element={<RequestPage />} />
-          <Route path="/request/:requestId" element={<RequestDetailPageWrapper />} />
-          <Route path="/users" element={<UsersManagementPage />} />
-          <Route path="statistics" element={<StatisticsPage />} />
+      <Route path="/" element={<RequireAuth><RootLayout /></RequireAuth>}>
+        <Route index element={<RequestPage />} />
+        <Route path="/request/:requestId" element={<RequestDetailPageWrapper />} />
+        <Route path="/users" element={<UsersManagementPage />} />
+        <Route path="statistics" element={<StatisticsPage />} />
 
-            {/* <Route path="notifications" element={<NotificationsPage />} /> */}
+        {/* <Route path="notifications" element={<NotificationsPage />} /> */}
 
-            <Route path="parts" element={<OrderedPartsPage />} />
+        <Route path="parts" element={<OrderedPartsPage />} />
 
-            <Route path="comments" element={<CommentsPage />} />
-        </Route>
+        <Route path="comments" element={<CommentsPage />} />
       </Route>
     </Routes>
   </BrowserRouter>
